@@ -21,33 +21,41 @@ class _ShopViewState extends BaseState<ShopView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: currentTheme.primaryColor,
       body: PageView(
-        controller:
-            PageController(viewportFraction: currentPage == 1 ? 0.8 : 1),
-        onPageChanged: (value) {
-          setState(() {
-            currentPage = value;
-          });
-        },
+        controller: PageController(viewportFraction: pageViewHeight),
+        onPageChanged: (value) => onPageChanged(value),
         scrollDirection: Axis.vertical,
+        children: <Widget>[pageShopListView(), pageShopBuyView()],
+      ),
+    );
+  }
+
+  Container pageShopBuyView() {
+    return Container(
+      color: Colors.black,
+    );
+  }
+
+  Container pageShopListView() {
+    return Container(
+      color: Colors.black,
+      child: Column(
         children: <Widget>[
-          Container(
-            color: Colors.black,
-            child: Column(
-              children: <Widget>[
-                buildExpandedBody(),
-                buildSubListContainer(),
-              ],
-            ),
-          ),
-          Container(
-            color: Colors.black,
-          )
+          buildExpandedBody(),
+          buildSubListContainer(),
         ],
       ),
     );
   }
+
+  void onPageChanged(int val) {
+    setState(() {
+      currentPage = val;
+    });
+  }
+
+  double get pageViewHeight => currentPage == 1 ? 0.8 : 1;
 
   /// 1
   Expanded buildExpandedBody() {
@@ -151,7 +159,8 @@ class _ShopViewState extends BaseState<ShopView> {
   }
 
   Widget get text => Text(appStrings.shopConstants.subTitle,
-      style: currentTheme.textTheme.headline3.copyWith(color: Colors.white));
+      style: currentTheme.textTheme.headline3
+          .copyWith(color: currentTheme.canvasColor));
 
   Expanded buildExpandedProductList() {
     return Expanded(
