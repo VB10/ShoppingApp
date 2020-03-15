@@ -16,15 +16,34 @@ class ShopView extends StatefulWidget {
 
 class _ShopViewState extends BaseState<ShopView> {
   List<Product> subList = [];
+  int currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Column(
+      body: PageView(
+        controller:
+            PageController(viewportFraction: currentPage == 1 ? 0.8 : 1),
+        onPageChanged: (value) {
+          setState(() {
+            currentPage = value;
+          });
+        },
+        scrollDirection: Axis.vertical,
         children: <Widget>[
-          buildExpandedBody(),
-          buildSubListContainer(),
+          Container(
+            color: Colors.black,
+            child: Column(
+              children: <Widget>[
+                buildExpandedBody(),
+                buildSubListContainer(),
+              ],
+            ),
+          ),
+          Container(
+            color: Colors.black,
+          )
         ],
       ),
     );
@@ -84,15 +103,19 @@ class _ShopViewState extends BaseState<ShopView> {
             final product = dummyList[index];
             return InkWell(
               onTap: () async => productCardOnPressed(index, product),
-              child: Hero(
-                  tag: appStrings.listHeroTag(index),
-                  child: ShoppingCard(product: product)),
+              child: buildHero(index, product),
             );
           },
           childCount: dummyList.length,
         ),
       ),
     );
+  }
+
+  Hero buildHero(int index, Product product) {
+    return Hero(
+        tag: appStrings.listHeroTag(index),
+        child: ShoppingCard(product: product));
   }
 
   Future<void> productCardOnPressed(int index, Product product) async {
@@ -112,10 +135,10 @@ class _ShopViewState extends BaseState<ShopView> {
 
   Widget buildSubListContainer() {
     return AnimatedContainer(
-      height: subList.length <= 0 ? 0 : dynamicHeight(0.1),
+      height: subList.length <= 0 || currentPage == 1 ? 0 : dynamicHeight(0.1),
       decoration: BoxDecoration(color: currentTheme.primaryColor),
       padding: EdgeInsets.symmetric(horizontal: dynamicHeight(0.02)),
-      duration: Duration(seconds: 1),
+      duration: Duration(milliseconds: 500),
       child: Row(
         children: <Widget>[
           text,
