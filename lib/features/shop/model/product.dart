@@ -98,3 +98,10 @@ List<Product> dummyList = [
       title: "Short pasta | GRANORO - IL PRIMO",
       weight: 500)
 ];
+
+Product singleModel = Product(
+    image:
+        "https://cdn.shopify.com/s/files/1/2786/0986/products/granoro-spaghetti-tagliati-n68-the-italian-shop-free-delivery_580x.png?v=1548429175",
+    price: 1.19,
+    title: "Granoro -Spaghetti Tagliati - N.68",
+    weight: 500);

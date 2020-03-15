@@ -1,9 +1,12 @@
 part 'inapp/shop_strings.dart';
 
-class AppConstants {
-  static AppConstants _instance = AppConstants._init();
-  static AppConstants get instance => _instance;
-  AppConstants._init();
+class AppStrings {
+  static AppStrings _instance = AppStrings._init();
+  static AppStrings get instance => _instance;
+  AppStrings._init();
 
   final shopConstants = _ShopStrings();
+
+  String subHeroTag(int index) => "subhero-$index";
+  String listHeroTag(int index) => "listHero-$index";
 }

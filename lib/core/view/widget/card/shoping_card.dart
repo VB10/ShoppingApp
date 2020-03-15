@@ -12,19 +12,21 @@ class ShoppingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final currentTheme = Theme.of(context);
     final height = MediaQuery.of(context).size.height;
-    return Padding(
-      padding: padding ?? EdgeInsets.all(10),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          buildExpandedImage(),
-          buildText(currentTheme),
-          SizedBox(height: height * 0.01),
-          buildTitleText(currentTheme),
-          SizedBox(height: height * 0.005),
-          buildWeightText(currentTheme)
-        ],
+    return Card(
+      child: Padding(
+        padding: padding ?? EdgeInsets.all(10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            buildExpandedImage(),
+            buildText(currentTheme),
+            SizedBox(height: height * 0.01),
+            buildTitleText(currentTheme),
+            SizedBox(height: height * 0.005),
+            buildWeightText(currentTheme)
+          ],
+        ),
       ),
     );
   }

@@ -4,12 +4,12 @@ class _OpenContainerWrapper extends StatelessWidget {
   const _OpenContainerWrapper({
     this.closedBuilder,
     this.transitionType,
-    this.closedBuilder2,
+    this.onOpenCardClose,
   });
 
   final OpenContainerBuilder closedBuilder;
-  final Widget closedBuilder2;
   final ContainerTransitionType transitionType;
+  final Function(dynamic data) onOpenCardClose;
 
   @override
   Widget build(BuildContext context) {

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shoppingapp/core/constants/app_constants.dart';
 import 'package:shoppingapp/core/constants/app_strings.dart';
 
 abstract class BaseState<T extends StatefulWidget> extends State<T> {
   ThemeData get currentTheme => Theme.of(context);
 
+  AppStrings get appStrings => AppStrings.instance;
   AppConstants get appConstants => AppConstants.instance;
 
   double dynamicHeight(double val) => MediaQuery.of(context).size.height * val;
