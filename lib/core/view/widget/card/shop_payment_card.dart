@@ -11,20 +11,21 @@ class ShopPaymentCard extends BaseStatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentTheme = Theme.of(context);
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        circleImage(currentTheme),
-        Spacer(),
-        buildExpandedCountNumber(context),
-        Spacer(),
-        buildExpandedMultiText(context),
-        Spacer(),
-        buildExpandedTitle(context),
-        Spacer(),
-        buildExpandedMoney(context),
-      ],
+    return SizedBox(
+      height: dynamicHeight(context: context, val: 0.1),
+      child: Row(
+        children: <Widget>[
+          circleImage(currentTheme),
+          Spacer(),
+          buildExpandedCountNumber(context),
+          Spacer(),
+          buildExpandedMultiText(context),
+          Spacer(),
+          buildExpandedTitle(context),
+          Spacer(),
+          buildExpandedMoney(context),
+        ],
+      ),
     );
   }
 
@@ -71,11 +72,8 @@ class ShopPaymentCard extends BaseStatelessWidget {
     );
   }
 
-  Widget circleImage(ThemeData currentTheme) => Expanded(
-        flex: 4,
-        child: ShoppingCardCircle(
-          currentTheme: currentTheme,
-          product: item,
-        ),
+  Widget circleImage(ThemeData currentTheme) => ShoppingCardCircle(
+        currentTheme: currentTheme,
+        product: item,
       );
 }

@@ -51,16 +51,16 @@ class PaymentListTile extends StatelessWidget {
   Column buildDeliveryBodyColumn(BuildContext context) {
     return Column(
       children: <Widget>[
-        EmptyHeightWidget(val: 0.01),
-        Text(
-          AppStrings.instance.orderFree,
-          style: Theme.of(context)
-              .primaryTextTheme
-              .headline5
-              .copyWith(color: Theme.of(context).splashColor),
-        ),
-        EmptyHeightWidget(
-          val: 0.02,
+        Spacer(),
+        Expanded(
+          flex: 9,
+          child: Text(
+            AppStrings.instance.orderFree,
+            style: Theme.of(context)
+                .primaryTextTheme
+                .headline5
+                .copyWith(color: Theme.of(context).splashColor),
+          ),
         ),
         LinearProgressIndicator(
           value: indicatorValue,

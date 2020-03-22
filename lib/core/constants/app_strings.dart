@@ -16,4 +16,6 @@ class AppStrings {
   String multi = "x";
   String delivery = "Delivery";
   String orderFree = "All order of \$40 or more quality for FREE delivery";
+  String total = "Total:";
+  String next = "Next";
 }
