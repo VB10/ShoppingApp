@@ -1,13 +1,11 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/view/base/base_state.dart';
 import '../../../core/view/widget/avatar/number_circle_avatar.dart';
 import '../../../core/view/widget/card/shoping_card.dart';
+import '../../../core/view/widget/card/shopping_circle_card.dart';
 import '../model/product.dart';
 import 'shop_view_detail.dart';
-
-part './shop_animation.dart';
 
 class ShopView extends StatefulWidget {
   @override
@@ -169,15 +167,10 @@ class _ShopViewState extends BaseState<ShopView> {
         itemCount: subList.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return Hero(
-            tag: appStrings.subHeroTag(index),
-            child: CircleAvatar(
-              backgroundColor: currentTheme.canvasColor,
-              child: Padding(
-                padding: EdgeInsets.all(dynamicHeight(0.015)),
-                child: Image.network(subList[index].image),
-              ),
-            ),
+          return ShoppingCardCircle(
+            currentTheme: currentTheme,
+            product: subList[index],
+            index: index,
           );
         },
       ),

@@ -45,6 +45,7 @@ class ShopDetailView extends BaseStatelessWidget {
   Widget get emptyWidget => EmptyHeightWidget(
         val: 0.02,
       );
+
   SafeArea buildBottomSafeArea(
       BuildContext context, TextTheme textTheme, ColorScheme colorScheme) {
     return SafeArea(
@@ -55,6 +56,22 @@ class ShopDetailView extends BaseStatelessWidget {
     );
   }
 
+  Widget buildHeroAddToCard(
+      BuildContext context, TextTheme textTheme, ColorScheme colorScheme) {
+    return FloatingActionButton.extended(
+      heroTag: AppStrings.instance.subHeroTag(index),
+      backgroundColor: Theme.of(context).primaryColorDark,
+      onPressed: () {
+        Navigator.of(context).pop(data);
+      },
+      label: Text(
+        AppStrings.instance.addToCard,
+        style: textTheme.headline4.copyWith(
+            fontWeight: FontWeight.bold, color: colorScheme.onSurface),
+      ),
+    );
+  }
+
   Widget buildBottomNavigationBar(
       BuildContext context, TextTheme textTheme, ColorScheme colorScheme) {
     return Row(
@@ -62,15 +79,7 @@ class ShopDetailView extends BaseStatelessWidget {
       children: <Widget>[
         CircleIconButton(),
         Expanded(
-          child: FloatingActionButton.extended(
-            backgroundColor: Theme.of(context).primaryColorDark,
-            onPressed: () {},
-            label: Text(
-              AppStrings.instance.addToCard,
-              style: textTheme.headline4.copyWith(
-                  fontWeight: FontWeight.bold, color: colorScheme.onSurface),
-            ),
-          ),
+          child: buildHeroAddToCard(context, textTheme, colorScheme),
         )
       ],
     );
@@ -95,9 +104,9 @@ class ShopDetailView extends BaseStatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         NumberPicker(
-          number: 0,
+          number: data.count,
           onChanged: (value) {
-            print(value);
+            data.count = value;
           },
         ),
         Text(
@@ -122,17 +131,6 @@ class ShopDetailView extends BaseStatelessWidget {
       style: textTheme.headline1
           .copyWith(color: colorScheme.onSurface, fontWeight: FontWeight.bold),
       maxLines: 2,
-    );
-  }
-
-  Hero buildHeroAddToCard(BuildContext context) {
-    return Hero(
-      tag: AppStrings.instance.subHeroTag(index),
-      child: RaisedButton(
-        onPressed: () {
-          Navigator.of(context).pop(data);
-        },
-      ),
     );
   }
 

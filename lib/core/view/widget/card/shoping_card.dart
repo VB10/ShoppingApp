@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:shoppingapp/core/view/base/base_stateless.dart';
 import 'package:shoppingapp/features/shop/model/product.dart';
 
-class ShoppingCard extends StatelessWidget {
+class ShoppingCard extends BaseStatelessWidget {
   final Product product;
   final EdgeInsets padding;
   final double radius;
 
-  const ShoppingCard({Key key, this.product, this.padding, this.radius})
-      : super(key: key);
+  ShoppingCard({Key key, this.product, this.padding, this.radius});
   @override
   Widget build(BuildContext context) {
     final currentTheme = Theme.of(context);
     final height = MediaQuery.of(context).size.height;
     return Card(
+      elevation: 5,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+              Radius.circular(dynamicWidth(context: context, val: 0.04)))),
       child: Padding(
         padding: padding ?? EdgeInsets.all(10),
         child: Column(
@@ -33,7 +37,7 @@ class ShoppingCard extends StatelessWidget {
 
   Text buildWeightText(ThemeData currentTheme) {
     return Text(
-      "${product.weight}g",
+      "${product.weight.toInt()} g",
       style: currentTheme.textTheme.headline6
           .copyWith(fontWeight: FontWeight.w300),
     );

@@ -9,7 +9,10 @@ class NumberCircleAvatar extends StatelessWidget {
     return CircleAvatar(
       child: Text(
         index == 0 ? "" : index.toString(),
-        style: Theme.of(context).textTheme.headline5,
+        style: Theme.of(context)
+            .textTheme
+            .headline5
+            .copyWith(fontWeight: FontWeight.bold),
       ),
     );
   }
