@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shoppingapp/core/constants/enums/page_view_enums.dart';
 
 import '../../../core/view/base/base_state.dart';
 import '../model/product.dart';
@@ -23,14 +24,14 @@ class _ShopViewState extends BaseState<ShopView> {
         onPageChanged: (value) => onPageChanged(value),
         scrollDirection: Axis.vertical,
         children: <Widget>[
-          ShopListView(
-            isUserOnPage: currentPage == 0,
-          ),
+          ShopListView(isUserOnPage: currentPage == 0),
           ShopPaymentView()
         ],
       ),
     );
   }
+
+  bool get isShopPage => currentPage == PageViews.PRODUCT_LIST.index;
 
   void onPageChanged(int val) {
     setState(() {

@@ -12,4 +12,8 @@ class AppStrings {
 
   String aboutProduct = "About the Product";
   String addToCard = "Add to card";
+  String paymentTitle = "Cart";
+  String multi = "x";
+  String delivery = "Delivery";
+  String orderFree = "All order of \$40 or more quality for FREE delivery";
 }

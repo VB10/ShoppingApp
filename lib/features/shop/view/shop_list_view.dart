@@ -47,6 +47,29 @@ class _ShopListViewState extends BaseState<ShopListView> {
     );
   }
 
+  // 2.1
+  Expanded buildExpandedProductList() {
+    return Expanded(
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: subList.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return ShoppingCardCircle(
+            currentTheme: currentTheme,
+            product: subList[index],
+            index: index,
+          );
+        },
+      ),
+    );
+  }
+
+  //1.3
+  Widget get text => Text(appStrings.shopConstants.subTitle,
+      style: currentTheme.textTheme.headline3
+          .copyWith(color: currentTheme.canvasColor));
+
   /// 1
   Expanded buildExpandedBody() {
     return Expanded(
@@ -130,26 +153,5 @@ class _ShopListViewState extends BaseState<ShopListView> {
       }
       setState(() {});
     }
-  }
-
-  Widget get text => Text(appStrings.shopConstants.subTitle,
-      style: currentTheme.textTheme.headline3
-          .copyWith(color: currentTheme.canvasColor));
-
-  Expanded buildExpandedProductList() {
-    return Expanded(
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: subList.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return ShoppingCardCircle(
-            currentTheme: currentTheme,
-            product: subList[index],
-            index: index,
-          );
-        },
-      ),
-    );
   }
 }

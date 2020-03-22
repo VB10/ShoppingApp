@@ -25,7 +25,7 @@ class ShopDetailView extends BaseStatelessWidget {
         children: <Widget>[
           buildHeroImage(),
           emptyWidget,
-          buildTitleText(textTheme, colorScheme),
+          buildTitleText(context, colorScheme),
           emptyWidget,
           buildWeightText(textTheme),
           emptyWidget,
@@ -125,11 +125,12 @@ class ShopDetailView extends BaseStatelessWidget {
     );
   }
 
-  Text buildTitleText(TextTheme textTheme, ColorScheme colorScheme) {
+  Text buildTitleText(BuildContext context, ColorScheme colorScheme) {
     return Text(
       data.title,
-      style: textTheme.headline1
-          .copyWith(color: colorScheme.onSurface, fontWeight: FontWeight.bold),
+      style: currentTextTheme(context)
+          .headline1
+          .copyWith(fontWeight: FontWeight.bold),
       maxLines: 2,
     );
   }
