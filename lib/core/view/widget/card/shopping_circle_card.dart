@@ -41,7 +41,9 @@ class ShoppingCardCircle extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Spacer(),
-            Stack(children: <Widget>[buildCircleImageAvatar(), badge]),
+            Expanded(
+              child: Stack(children: <Widget>[buildCircleImageAvatar(), badge]),
+            ),
             Spacer(),
           ],
         ),
