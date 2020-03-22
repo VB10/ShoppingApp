@@ -5,7 +5,7 @@ final ThemeData myTheme = ThemeData(
   primaryColor: Color(0xff000000),
   primaryColorBrightness: Brightness.dark,
   primaryColorLight: Color(0xffffcccc),
-  primaryColorDark: Color(0xffCC9E3A),
+  primaryColorDark: Color(0xffFDC44A),
   accentColor: Color(0xffff0000),
   accentColorBrightness: Brightness.dark,
   canvasColor: Color(0xfffafafa),

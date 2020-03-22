@@ -1,35 +1,143 @@
 import 'package:flutter/material.dart';
-import 'package:shoppingapp/core/constants/app_strings.dart';
-import 'package:shoppingapp/features/shop/model/product.dart';
+import 'package:lipsum/lipsum.dart' as lipsum;
+import 'package:shoppingapp/core/view/base/base_stateless.dart';
+import 'package:shoppingapp/core/view/widget/container/empty_widget.dart';
 
-class ShopDetailView extends StatelessWidget {
+import '../../../core/constants/app_strings.dart';
+import '../../../core/view/widget/button/circle_button.dart';
+import '../../../core/view/widget/picker/number_picker.dart';
+import '../model/product.dart';
+
+class ShopDetailView extends BaseStatelessWidget {
   final Product data;
   final int index;
 
-  const ShopDetailView({Key key, this.data, this.index}) : super(key: key);
+  ShopDetailView({Key key, this.data, this.index});
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Hero(
-              tag: AppStrings.instance.listHeroTag(index),
-              child:
-                  AspectRatio(aspectRatio: 1, child: Image.network(data.image)),
-            ),
-            Hero(
-              tag: AppStrings.instance.subHeroTag(index),
-              child: RaisedButton(
-                onPressed: () {
-                  Navigator.of(context).pop(data);
-                },
-              ),
-            ),
-          ],
-        ),
+      bottomNavigationBar: buildBottomSafeArea(context, textTheme, colorScheme),
+      body: ListView(
+        padding: EdgeInsets.symmetric(
+            horizontal: dynamicWidth(context: context, val: 0.1)),
+        children: <Widget>[
+          buildHeroImage(),
+          emptyWidget,
+          buildTitleText(textTheme, colorScheme),
+          emptyWidget,
+          buildWeightText(textTheme),
+          emptyWidget,
+          buildCounterAndPriceCard(textTheme, colorScheme),
+          emptyWidget,
+          buildSubTitleText(textTheme, colorScheme),
+          emptyWidget,
+          lipsumGenerator(textTheme),
+        ],
       ),
+    );
+  }
+
+  EdgeInsetsGeometry _padding(BuildContext context) => EdgeInsets.symmetric(
+      horizontal: dynamicWidth(context: context, val: 0.1));
+
+  Widget get emptyWidget => EmptyHeightWidget(
+        val: 0.02,
+      );
+
+  SafeArea buildBottomSafeArea(
+      BuildContext context, TextTheme textTheme, ColorScheme colorScheme) {
+    return SafeArea(
+      child: Container(
+          padding: _padding(context),
+          color: Colors.white70,
+          child: buildBottomNavigationBar(context, textTheme, colorScheme)),
+    );
+  }
+
+  Widget buildHeroAddToCard(
+      BuildContext context, TextTheme textTheme, ColorScheme colorScheme) {
+    return FloatingActionButton.extended(
+      heroTag: AppStrings.instance.subHeroTag(index),
+      backgroundColor: Theme.of(context).primaryColorDark,
+      onPressed: () {
+        Navigator.of(context).pop(data);
+      },
+      label: Text(
+        AppStrings.instance.addToCard,
+        style: textTheme.headline4.copyWith(
+            fontWeight: FontWeight.bold, color: colorScheme.onSurface),
+      ),
+    );
+  }
+
+  Widget buildBottomNavigationBar(
+      BuildContext context, TextTheme textTheme, ColorScheme colorScheme) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        CircleIconButton(),
+        Expanded(
+          child: buildHeroAddToCard(context, textTheme, colorScheme),
+        )
+      ],
+    );
+  }
+
+  Text lipsumGenerator(TextTheme textTheme) {
+    return Text(lipsum.createParagraph(numParagraphs: 3),
+        style: textTheme.headline4);
+  }
+
+  Text buildSubTitleText(TextTheme textTheme, ColorScheme colorScheme) {
+    return Text(
+      AppStrings.instance.aboutProduct,
+      style: textTheme.headline3
+          .copyWith(color: colorScheme.onSurface, fontWeight: FontWeight.bold),
+      maxLines: 2,
+    );
+  }
+
+  Row buildCounterAndPriceCard(TextTheme textTheme, ColorScheme colorScheme) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        NumberPicker(
+          number: data.count,
+          onChanged: (value) {
+            data.count = value;
+          },
+        ),
+        Text(
+          "\$${data.price.toString()}",
+          style: textTheme.headline1.copyWith(
+              color: colorScheme.onSurface, fontWeight: FontWeight.bold),
+        ),
+      ],
+    );
+  }
+
+  Text buildWeightText(TextTheme textTheme) {
+    return Text(
+      "${data.weight.toInt().toString()} g",
+      style: textTheme.headline4,
+    );
+  }
+
+  Text buildTitleText(TextTheme textTheme, ColorScheme colorScheme) {
+    return Text(
+      data.title,
+      style: textTheme.headline1
+          .copyWith(color: colorScheme.onSurface, fontWeight: FontWeight.bold),
+      maxLines: 2,
+    );
+  }
+
+  Hero buildHeroImage() {
+    return Hero(
+      tag: AppStrings.instance.listHeroTag(index),
+      child: AspectRatio(aspectRatio: 1, child: Image.network(data.image)),
     );
   }
 }
