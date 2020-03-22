@@ -9,4 +9,7 @@ class AppStrings {
 
   String subHeroTag(int index) => "subhero-$index";
   String listHeroTag(int index) => "listHero-$index";
+
+  String aboutProduct = "About the Product";
+  String addToCard = "Add to card";
 }
