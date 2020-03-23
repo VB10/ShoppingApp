@@ -43,6 +43,34 @@ class Product {
   String toJson() => json.encode(toMap());
 
   static Product fromJson(String source) => fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return 'Product(image: $image, price: $price, title: $title, weight: $weight, count: $count, maxCount: $maxCount)';
+  }
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+
+    return o is Product &&
+        o.image == image &&
+        o.price == price &&
+        o.title == title &&
+        o.weight == weight &&
+        o.count == count &&
+        o.maxCount == maxCount;
+  }
+
+  @override
+  int get hashCode {
+    return image.hashCode ^
+        price.hashCode ^
+        title.hashCode ^
+        weight.hashCode ^
+        count.hashCode ^
+        maxCount.hashCode;
+  }
 }
 
 List<Product> dummyList = [

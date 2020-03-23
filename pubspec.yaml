@@ -14,7 +14,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.1.0 <3.0.0'
+  sdk: '>=2.6.0 <3.0.0'
 
 dependencies:
   flutter:
@@ -26,6 +26,8 @@ dependencies:
   animations: ^1.0.0+5
   lipsum: ^1.0.1
   font_awesome_flutter: ^8.7.0
+  provider: ^4.0.4
+  lottie: ^0.3.2
 
 dev_dependencies:
   flutter_test:
@@ -41,8 +43,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  # - assets/theme/theme.dart
+  assets:
+    - assets/lottie/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

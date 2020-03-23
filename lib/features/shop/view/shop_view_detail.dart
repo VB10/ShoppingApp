@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lipsum/lipsum.dart' as lipsum;
+import 'package:provider/provider.dart';
 import 'package:shoppingapp/core/view/base/base_stateless.dart';
 import 'package:shoppingapp/core/view/widget/container/empty_widget.dart';
+import 'package:shoppingapp/features/notifier/product_list_notifier.dart';
 
 import '../../../core/constants/app_strings.dart';
 import '../../../core/view/widget/button/circle_button.dart';
@@ -18,6 +20,11 @@ class ShopDetailView extends BaseStatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: IconThemeData(color: colorScheme.onSurface),
+      ),
       bottomNavigationBar: buildBottomSafeArea(context, textTheme, colorScheme),
       body: ListView(
         padding: EdgeInsets.symmetric(
@@ -25,7 +32,7 @@ class ShopDetailView extends BaseStatelessWidget {
         children: <Widget>[
           buildHeroImage(),
           emptyWidget,
-          buildTitleText(textTheme, colorScheme),
+          buildTitleText(context, colorScheme),
           emptyWidget,
           buildWeightText(textTheme),
           emptyWidget,
@@ -62,7 +69,9 @@ class ShopDetailView extends BaseStatelessWidget {
       heroTag: AppStrings.instance.subHeroTag(index),
       backgroundColor: Theme.of(context).primaryColorDark,
       onPressed: () {
-        Navigator.of(context).pop(data);
+        Provider.of<ProductListNotifier>(context, listen: false)
+            .addProduct(data);
+        Navigator.of(context).pop();
       },
       label: Text(
         AppStrings.instance.addToCard,
@@ -125,11 +134,12 @@ class ShopDetailView extends BaseStatelessWidget {
     );
   }
 
-  Text buildTitleText(TextTheme textTheme, ColorScheme colorScheme) {
+  Text buildTitleText(BuildContext context, ColorScheme colorScheme) {
     return Text(
       data.title,
-      style: textTheme.headline1
-          .copyWith(color: colorScheme.onSurface, fontWeight: FontWeight.bold),
+      style: currentTextTheme(context)
+          .headline1
+          .copyWith(fontWeight: FontWeight.bold),
       maxLines: 2,
     );
   }

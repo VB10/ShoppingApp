@@ -9,14 +9,41 @@ class ShoppingCardCircle extends StatelessWidget {
     @required this.currentTheme,
     @required this.product,
     this.index,
+    this.isBadge = true,
   }) : super(key: key);
 
   final ThemeData currentTheme;
   final Product product;
   final int index;
+  final bool isBadge;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(4.0),
+      child: index == null ? buildColumnCircle : buildHeroColumCircle,
+    );
+  }
+
+  Hero get buildHeroColumCircle {
+    return Hero(
+      tag: index != null ? AppStrings.instance.subHeroTag(index) : null,
+      child: buildColumnCircle,
+    );
+  }
+
+  Column get buildColumnCircle => Column(
+        children: <Widget>[
+          Spacer(),
+          Expanded(
+              child:
+                  Stack(children: <Widget>[buildCircleImageAvatar(), badge])),
+          Spacer(),
+        ],
+      );
 
   Widget get badge => Visibility(
-        visible: product.count != 0,
+        visible: product.count != 0 && isBadge,
         child: Positioned(
           top: 0,
           right: 0,
@@ -32,24 +59,6 @@ class ShoppingCardCircle extends StatelessWidget {
           ),
         ),
       );
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(4.0),
-      child: Hero(
-        tag: AppStrings.instance.subHeroTag(index),
-        child: Column(
-          children: <Widget>[
-            Spacer(),
-            Expanded(
-              child: Stack(children: <Widget>[buildCircleImageAvatar(), badge]),
-            ),
-            Spacer(),
-          ],
-        ),
-      ),
-    );
-  }
 
   CircleAvatar buildCircleImageAvatar() {
     return CircleAvatar(

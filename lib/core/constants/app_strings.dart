@@ -11,5 +11,11 @@ class AppStrings {
   String listHeroTag(int index) => "listHero-$index";
 
   String aboutProduct = "About the Product";
-  String addToCard = "Add to card";
+  String addToCard = "Add to cart";
+  String paymentTitle = "Cart";
+  String multi = "x";
+  String delivery = "Delivery";
+  String orderFree = "All order of \$40 or more quality for FREE delivery";
+  String total = "Total:";
+  String next = "Next";
 }

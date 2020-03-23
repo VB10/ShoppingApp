@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shoppingapp/features/notifier/product_list_notifier.dart';
 
 import '../../../core/view/base/base_state.dart';
 import '../../../core/view/widget/avatar/number_circle_avatar.dart';
@@ -30,22 +32,48 @@ class _ShopListViewState extends BaseState<ShopListView> {
 
   // 2
   Widget buildSubListContainer() {
-    return AnimatedContainer(
-      height:
-          subList.length <= 0 || !widget.isUserOnPage ? 0 : dynamicHeight(0.1),
-      decoration: BoxDecoration(color: currentTheme.primaryColor),
-      padding: EdgeInsets.symmetric(horizontal: dynamicHeight(0.02)),
-      duration: Duration(milliseconds: 500),
-      child: Row(
-        children: <Widget>[
-          text,
-          SizedBox(width: dynamicWidth(0.05)),
-          buildExpandedProductList(),
-          NumberCircleAvatar(index: subList.length)
-        ],
+    return Consumer<ProductListNotifier>(
+      builder: (context, value, child) => AnimatedContainer(
+        height: value.productList.length <= 0 || !widget.isUserOnPage
+            ? 0
+            : dynamicHeight(0.1),
+        decoration: BoxDecoration(color: currentTheme.primaryColor),
+        padding: EdgeInsets.symmetric(horizontal: dynamicHeight(0.02)),
+        duration: Duration(milliseconds: 500),
+        child: Row(
+          children: <Widget>[
+            text,
+            SizedBox(width: dynamicWidth(0.05)),
+            buildExpandedProductList(value.productList),
+            NumberCircleAvatar(index: value.productList.length)
+          ],
+        ),
       ),
     );
   }
+
+  // 2.1
+  Expanded buildExpandedProductList(List<Product> productList) {
+    return Expanded(
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: productList.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return ShoppingCardCircle(
+            currentTheme: currentTheme,
+            product: productList[index],
+            index: index,
+          );
+        },
+      ),
+    );
+  }
+
+  //1.3
+  Widget get text => Text(appStrings.shopConstants.subTitle,
+      style: currentTheme.textTheme.headline3
+          .copyWith(color: currentTheme.canvasColor));
 
   /// 1
   Expanded buildExpandedBody() {
@@ -130,26 +158,5 @@ class _ShopListViewState extends BaseState<ShopListView> {
       }
       setState(() {});
     }
-  }
-
-  Widget get text => Text(appStrings.shopConstants.subTitle,
-      style: currentTheme.textTheme.headline3
-          .copyWith(color: currentTheme.canvasColor));
-
-  Expanded buildExpandedProductList() {
-    return Expanded(
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: subList.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return ShoppingCardCircle(
-            currentTheme: currentTheme,
-            product: subList[index],
-            index: index,
-          );
-        },
-      ),
-    );
   }
 }

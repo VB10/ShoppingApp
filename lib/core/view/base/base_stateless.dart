@@ -10,7 +10,11 @@ abstract class BaseStatelessWidget extends StatelessWidget {
     return MediaQuery.of(context).size.width * val;
   }
 
-  TextTheme currentTheme(BuildContext context) => Theme.of(context).textTheme;
+  TextTheme currentTextTheme(BuildContext context) =>
+      Theme.of(context).textTheme;
+  TextTheme currentPrimaryTextTheme(BuildContext context) =>
+      Theme.of(context).primaryTextTheme;
+
   ColorScheme colorScheme(BuildContext context) =>
       Theme.of(context).colorScheme;
 }

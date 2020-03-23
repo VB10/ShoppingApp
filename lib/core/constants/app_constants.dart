@@ -5,6 +5,8 @@ class AppConstants {
   static AppConstants get instance => _instance;
   AppConstants._init();
 
+  static const double FREE_DELIVERY_MONEY = 40;
+
   var sliverGridDelegateWithFixedCrossAxisCount =
       SliverGridDelegateWithFixedCrossAxisCount(
     crossAxisCount: 2,
