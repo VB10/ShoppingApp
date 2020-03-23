@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shoppingapp/core/constants/app_constants.dart';
-import 'package:shoppingapp/core/constants/app_strings.dart';
-import 'package:shoppingapp/core/view/widget/container/empty_widget.dart';
+
+import '../../../constants/app_constants.dart';
+import '../../../constants/app_strings.dart';
 
 class PaymentListTile extends StatelessWidget {
   final int totalMoney;
@@ -24,7 +24,7 @@ class PaymentListTile extends StatelessWidget {
   }
 
   Text buildTextMoney(BuildContext context) {
-    return Text("\$$totalMoney",
+    return Text("\$${AppConstants.FREE_DELIVERY_MONEY}",
         style: Theme.of(context)
             .primaryTextTheme
             .headline4
@@ -52,23 +52,31 @@ class PaymentListTile extends StatelessWidget {
     return Column(
       children: <Widget>[
         Spacer(),
-        Expanded(
-          flex: 9,
-          child: Text(
-            AppStrings.instance.orderFree,
-            style: Theme.of(context)
-                .primaryTextTheme
-                .headline5
-                .copyWith(color: Theme.of(context).splashColor),
-          ),
-        ),
-        LinearProgressIndicator(
-          value: indicatorValue,
-          backgroundColor: Theme.of(context).splashColor,
-          valueColor:
-              AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColorDark),
-        ),
+        buildExpandedFreeText(context),
+        buildLinearProgressIndicator(context),
       ],
+    );
+  }
+
+  LinearProgressIndicator buildLinearProgressIndicator(BuildContext context) {
+    return LinearProgressIndicator(
+      value: indicatorValue,
+      backgroundColor: Theme.of(context).splashColor,
+      valueColor:
+          AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColorDark),
+    );
+  }
+
+  Expanded buildExpandedFreeText(BuildContext context) {
+    return Expanded(
+      flex: 9,
+      child: Text(
+        AppStrings.instance.orderFree,
+        style: Theme.of(context)
+            .primaryTextTheme
+            .headline5
+            .copyWith(color: Theme.of(context).splashColor),
+      ),
     );
   }
 

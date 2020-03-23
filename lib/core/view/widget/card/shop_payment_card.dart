@@ -35,6 +35,7 @@ class ShopPaymentCard extends BaseStatelessWidget {
       child: Text(
         " \$${item.price * item.count}",
         textScaleFactor: 0.8,
+        maxLines: 2,
         style: Theme.of(context)
             .primaryTextTheme
             .headline3

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shoppingapp/features/notifier/product_list_notifier.dart';
 
 import '../../../core/constants/app_strings.dart';
 import '../../../core/view/base/base_state.dart';
@@ -12,14 +14,9 @@ class ShopPaymentView extends StatefulWidget {
 }
 
 class _ShopPaymentViewState extends BaseState<ShopPaymentView> {
-  List<Product> _dummyList;
   int totalMoney = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _dummyList = dummyList;
-  }
+  List<Product> get currentProductList =>
+      Provider.of<ProductListNotifier>(context, listen: false).productList;
 
   @override
   Widget build(BuildContext context) {
@@ -58,22 +55,27 @@ class _ShopPaymentViewState extends BaseState<ShopPaymentView> {
 
   Row buildMoneyTotalCard(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text(
-          AppStrings.instance.total,
-          style: Theme.of(context)
-              .primaryTextTheme
-              .headline2
-              .copyWith(fontWeight: FontWeight.w200),
+        Expanded(
+          child: Text(
+            AppStrings.instance.total,
+            style: Theme.of(context)
+                .primaryTextTheme
+                .headline2
+                .copyWith(fontWeight: FontWeight.w200),
+          ),
         ),
         Text(
-          "\$$totalMoney",
+          "\$$sumMoneyAll",
+          maxLines: 1,
           style: Theme.of(context).primaryTextTheme.headline1,
         ),
       ],
     );
   }
+
+  double get sumMoneyAll => currentProductList.fold(
+      0, (previousValue, element) => previousValue + element.price);
 
   Expanded buildDeliveryCard() =>
       Expanded(flex: 1, child: PaymentListTile(totalMoney: 30));
@@ -81,10 +83,10 @@ class _ShopPaymentViewState extends BaseState<ShopPaymentView> {
   Expanded buildExpandedShopList() => Expanded(
       flex: 4,
       child: ListView.builder(
-        itemCount: 5,
+        itemCount: currentProductList.length,
         shrinkWrap: true,
         itemBuilder: (context, index) =>
-            ShopPaymentCard(item: _dummyList.first),
+            ShopPaymentCard(item: currentProductList[index]),
       ));
 
   Text cartTitle() {

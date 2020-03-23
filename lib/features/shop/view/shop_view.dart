@@ -24,7 +24,7 @@ class _ShopViewState extends BaseState<ShopView> {
         onPageChanged: (value) => onPageChanged(value),
         scrollDirection: Axis.vertical,
         children: <Widget>[
-          ShopListView(isUserOnPage: currentPage == 0),
+          ShopListView(isUserOnPage: isShopPage),
           ShopPaymentView()
         ],
       ),

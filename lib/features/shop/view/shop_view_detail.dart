@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lipsum/lipsum.dart' as lipsum;
+import 'package:provider/provider.dart';
 import 'package:shoppingapp/core/view/base/base_stateless.dart';
 import 'package:shoppingapp/core/view/widget/container/empty_widget.dart';
+import 'package:shoppingapp/features/notifier/product_list_notifier.dart';
 
 import '../../../core/constants/app_strings.dart';
 import '../../../core/view/widget/button/circle_button.dart';
@@ -62,7 +64,9 @@ class ShopDetailView extends BaseStatelessWidget {
       heroTag: AppStrings.instance.subHeroTag(index),
       backgroundColor: Theme.of(context).primaryColorDark,
       onPressed: () {
-        Navigator.of(context).pop(data);
+        Provider.of<ProductListNotifier>(context, listen: false)
+            .addProduct(data);
+        Navigator.of(context).pop();
       },
       label: Text(
         AppStrings.instance.addToCard,
