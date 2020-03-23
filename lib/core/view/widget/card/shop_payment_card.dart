@@ -76,5 +76,6 @@ class ShopPaymentCard extends BaseStatelessWidget {
   Widget circleImage(ThemeData currentTheme) => ShoppingCardCircle(
         currentTheme: currentTheme,
         product: item,
+        isBadge: false,
       );
 }

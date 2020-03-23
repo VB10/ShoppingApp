@@ -9,29 +9,14 @@ class ShoppingCardCircle extends StatelessWidget {
     @required this.currentTheme,
     @required this.product,
     this.index,
+    this.isBadge = true,
   }) : super(key: key);
 
   final ThemeData currentTheme;
   final Product product;
   final int index;
+  final bool isBadge;
 
-  Widget get badge => Visibility(
-        visible: product.count != 0,
-        child: Positioned(
-          top: 0,
-          right: 0,
-          height: 14,
-          width: 14,
-          child: CircleAvatar(
-            backgroundColor: currentTheme.errorColor,
-            child: Text(
-              product.count.toString(),
-              style: currentTheme.textTheme.headline6
-                  .copyWith(color: currentTheme.canvasColor),
-            ),
-          ),
-        ),
-      );
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -55,6 +40,24 @@ class ShoppingCardCircle extends StatelessWidget {
                   Stack(children: <Widget>[buildCircleImageAvatar(), badge])),
           Spacer(),
         ],
+      );
+
+  Widget get badge => Visibility(
+        visible: product.count != 0 && isBadge,
+        child: Positioned(
+          top: 0,
+          right: 0,
+          height: 14,
+          width: 14,
+          child: CircleAvatar(
+            backgroundColor: currentTheme.errorColor,
+            child: Text(
+              product.count.toString(),
+              style: currentTheme.textTheme.headline6
+                  .copyWith(color: currentTheme.canvasColor),
+            ),
+          ),
+        ),
       );
 
   CircleAvatar buildCircleImageAvatar() {

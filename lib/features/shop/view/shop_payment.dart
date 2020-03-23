@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shoppingapp/core/view/widget/lottie/not_found.dart';
 import 'package:shoppingapp/features/notifier/product_list_notifier.dart';
 
 import '../../../core/constants/app_strings.dart';
@@ -28,7 +29,6 @@ class _ShopPaymentViewState extends BaseState<ShopPaymentView> {
         children: <Widget>[
           Spacer(),
           cartTitle(),
-          Spacer(),
           buildExpandedShopList(),
           buildDeliveryCard(),
           Spacer(),
@@ -39,6 +39,20 @@ class _ShopPaymentViewState extends BaseState<ShopPaymentView> {
       ),
     );
   }
+
+  //1
+
+  Text cartTitle() {
+    return Text(
+      AppStrings.instance.paymentTitle,
+      style: currentTheme.primaryTextTheme.headline1,
+      textScaleFactor: 1.5,
+    );
+  }
+
+// 2
+  Expanded buildDeliveryCard() => Expanded(
+      flex: 1, child: PaymentListTile(totalMoney: sumMoneyAll.toInt()));
 
   SizedBox buildNextButton(BuildContext context) {
     return SizedBox(
@@ -75,25 +89,21 @@ class _ShopPaymentViewState extends BaseState<ShopPaymentView> {
   }
 
   double get sumMoneyAll => currentProductList.fold(
-      0, (previousValue, element) => previousValue + element.price);
-
-  Expanded buildDeliveryCard() =>
-      Expanded(flex: 1, child: PaymentListTile(totalMoney: 30));
+      0,
+      (previousValue, element) =>
+          previousValue + (element.price * element.count));
 
   Expanded buildExpandedShopList() => Expanded(
       flex: 4,
-      child: ListView.builder(
-        itemCount: currentProductList.length,
-        shrinkWrap: true,
-        itemBuilder: (context, index) =>
-            ShopPaymentCard(item: currentProductList[index]),
-      ));
+      child: currentProductList.isEmpty
+          ? notFoundLottie
+          : ListView.builder(
+              itemCount: currentProductList.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) =>
+                  ShopPaymentCard(item: currentProductList[index]),
+            ));
 
-  Text cartTitle() {
-    return Text(
-      AppStrings.instance.paymentTitle,
-      style: currentTheme.primaryTextTheme.headline1,
-      textScaleFactor: 1.5,
-    );
-  }
+  Widget get notFoundLottie =>
+      Center(child: AspectRatio(aspectRatio: 4 / 5, child: NotFoundLottie()));
 }

@@ -11,7 +11,7 @@ class AppStrings {
   String listHeroTag(int index) => "listHero-$index";
 
   String aboutProduct = "About the Product";
-  String addToCard = "Add to card";
+  String addToCard = "Add to cart";
   String paymentTitle = "Cart";
   String multi = "x";
   String delivery = "Delivery";

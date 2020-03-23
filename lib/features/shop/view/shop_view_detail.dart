@@ -20,6 +20,11 @@ class ShopDetailView extends BaseStatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: IconThemeData(color: colorScheme.onSurface),
+      ),
       bottomNavigationBar: buildBottomSafeArea(context, textTheme, colorScheme),
       body: ListView(
         padding: EdgeInsets.symmetric(
